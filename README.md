@@ -53,22 +53,8 @@ GOOGLE_API_KEY=""
 
 ## STEP 4: Run the Application
 
-### Gemini Question & Answer Application
-
 ```
-streamlit run gemini_qa.py
-```
-
-### Gemini Chat Bot
-
-```
-streamlit run gemini_chat.py
-```
-
-### Gemini Vision
-
-```
-streamlit run gemini_vision.py
+streamlit run Home.py
 ```
 
 # SOURCE
