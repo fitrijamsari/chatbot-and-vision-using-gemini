@@ -1,5 +1,6 @@
+# Question & Answers using Google Gemini API
+
 import os
-import pathlib
 import textwrap
 
 import google.generativeai as genai
@@ -12,6 +13,14 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
+# Set up model config
+generation_config = {
+    "temperature": 0.9,
+    "top_p": 1,
+    "top_k": 1,
+    "max_output_tokens": 2048,
+}
+
 
 def to_markdown(text):
     text = text.replace("•", "  *")
@@ -20,15 +29,24 @@ def to_markdown(text):
 
 # function to load Gemini Pro Model and get response
 def get_gemini_response(question):
-    model = genai.GenerativeModel("gemini-pro")
-    response = model.generate_content(question)
-    return response.text
+    model = genai.GenerativeModel(
+        model_name="gemini-pro", generation_config=generation_config
+    )
+    response = model.generate_content(question, stream=True)
+    return response
 
 
 def handle_user_input(input):
-    response = get_gemini_response(input)
-    st.subheader("The Response is")
-    st.write(response)
+    try:
+        response = get_gemini_response(input)
+        if response:
+            st.subheader("Gemini:")
+            for chunk in response:
+                st.write(chunk.text)
+        else:
+            st.write("No output from Gemini")
+    except Exception as e:
+        st.write(f"An error occured: {str(e)}")
 
 
 def main():
