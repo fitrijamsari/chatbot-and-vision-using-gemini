@@ -39,11 +39,9 @@ def handle_user_input(input):
         if response:
             st.session_state["chat_history"].append(("You", input))
             st.subheader("Gemini:")
-            st.write(response.text)
+            for chunk in response:
+                st.write(chunk.text)
             st.session_state["chat_history"].append(("Gemini", response.text))
-            # for chunk in response:
-            #     st.write(chunk.text)
-            #     st.session_state["chat_history"].append(("Gemini", chunk.text))
         else:
             st.write("No output from Gemini")
     except Exception as e:
@@ -77,7 +75,7 @@ def main():
     st.subheader("The Chat History:")
 
     for i, message in enumerate(st.session_state["chat_history"]):
-        print(i, message[1])
+        # print(i, message)
         if i % 2 == 0:
             st.write(
                 user_template.replace("{{MSG}}", message[1]),

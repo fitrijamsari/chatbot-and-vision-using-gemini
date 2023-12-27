@@ -1,5 +1,7 @@
 # CHATBOT & VISION USING GOOGLE GEMINI
 
+![main_img](img/gemini_streamlit.png)
+
 This project involve 3 differents application in LLM Application using Google Gemini Pro API with user interface using Streamlit.
 
 1. Gemini Question & Answer Application
